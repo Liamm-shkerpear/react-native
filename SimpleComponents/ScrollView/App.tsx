@@ -1,13 +1,17 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import MyClassComponents from './components/MyClassComponents';
 
 export default function App() {
   return (
-    <ScrollView pagingEnabled={true} horizontal={true}>
+    <SafeAreaView>
+    <MyClassComponents/>
+    <ScrollView>
       <View style={styles.container}><Text>Page 1</Text></View>
       <View style={styles.container}><Text>Page 2</Text></View>
       <View style={styles.container}><Text>Page 3</Text></View>
       <View style={styles.container}><Text>Page 4</Text></View>
     </ScrollView>
+    </SafeAreaView>
   );
 }
 
