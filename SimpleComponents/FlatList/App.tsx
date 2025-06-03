@@ -1,10 +1,12 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { SectionList, StyleSheet, Text, View } from 'react-native';
 import FlatlistEx from './components/FlatlistEx';
+import SectionListEx from './components/SectionListEx';
+
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <FlatlistEx />
+      <SectionListEx />
     </View>
   );
 }
