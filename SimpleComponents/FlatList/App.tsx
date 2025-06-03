@@ -1,12 +1,13 @@
 import { SectionList, StyleSheet, Text, View } from 'react-native';
 import FlatlistEx from './components/FlatlistEx';
 import SectionListEx from './components/SectionListEx';
+import MyDrawer from './components/MyDrawer';
 
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <SectionListEx />
+      <MyDrawer />
     </View>
   );
 }
