@@ -5,19 +5,56 @@ import { useState } from "react";
 const LoginScreen:React.FC = () => { 
     const [password, setPassword] = useState('')
     const [showPassword, setShowPassword] = useState(false)
+    const [email, setEmail] = useState('')
+    const [remember, setRemember] = useState(false)
+    const [emailError, setEmailError] = useState('')
+    const [passwordError, setPasswordError] = useState('')
+
+    const validateEmail = (email:string) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    const handleLogin = () => {
+        let valid = true
+        setEmailError('')
+        setPasswordError('')
+
+        if (email === ''){
+            setEmailError('Email is require!')
+            valid = false
+        } else if (!validateEmail(email)) {
+            setEmailError('Invalid email format!')
+            valid = false
+        }
+        if (password === ''){
+            setPasswordError('Password is require!')
+            valid = false
+        } else if (password.length < 8) {
+            setPasswordError('Password must be at least 8 characters!')
+            valid = false
+        }
+        if (valid) {
+            alert('Login success')
+        }
+    }
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Welcome Back</Text>
             <Image style={styles.logo} 
                 source={require('../assets/favicon.png')} resizeMode="contain" />
+            {/* Email */}   
             <View style={styles.inputContainer}>
                 <Ionicons name="mail-outline" size={24} color={'#6c757d'} style={styles.icon}/>
                 <TextInput style={styles.input} 
                     placeholder="Email" 
                     keyboardType="email-address"
                     placeholderTextColor='#6c757d' 
+                    value={email}
+                    onChangeText={setEmail}
                 />
-            </View>            
+            </View>
+            {emailError ? <Text style={styles.errorText}>{emailError}</Text> : null}            
             {/* Password */}
             <View style={styles.inputContainer}>
                 <Ionicons name="lock-closed-outline" size={24} color={'#6c757d'} style={styles.icon}/>
@@ -25,19 +62,24 @@ const LoginScreen:React.FC = () => {
                     placeholder="Password" 
                     secureTextEntry = {!showPassword}
                     placeholderTextColor='#6c757d' 
+                    value={password}
+                    onChangeText={setPassword}
                 />
                 <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
                     <Ionicons name= {showPassword?"eye-off-outline":"eye-outline"} size={24} color={'#6c757d'} />
                 </TouchableOpacity>
             </View>
+            {passwordError ? <Text style={styles.errorText}>{passwordError}</Text> : null}
             <View style={styles.rememberContainer}>
                 <TouchableOpacity>
                     <Ionicons name="checkbox-outline" size={24} color={'#6c757d'} style={styles.icon}/>
                 </TouchableOpacity>
                 <Text style={styles.rememberText}>Remember Password</Text>
             </View>
+            {/* Login button */}
             <View style={styles.buttonContainer}>
-                <TouchableOpacity style={[styles.button , styles.buttonLogin]}>
+                <TouchableOpacity onPress={ handleLogin }
+                style={[styles.button , styles.buttonLogin]}>
                     <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={[styles.button , styles.buttonCancel]}>
@@ -134,6 +176,13 @@ const styles = StyleSheet.create({
     link: {
         color: '#007bff',
         marginTop: 16
+    },
+    errorText: {
+        color: 'red',
+        fontSize: 12,
+        alignSelf: 'flex-start',
+        marginLeft: 10,
+        marginBottom: 10
     }
 })
 export default LoginScreen; 
